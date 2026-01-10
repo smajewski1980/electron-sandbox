@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron/main");
 const path = require("node:path");
+const testData = require("./data");
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -14,7 +15,17 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-  ipcMain.handle("ping", () => "pong");
+  ipcMain.handle("testEvent", async (e, message) => {
+    console.log(message);
+    console.log(`heres a message from the "frontend": ${message.message}`);
+    return "thanks for the message!";
+  });
+
+  ipcMain.handle("getData", async (e, idToGet) => {
+    const target = testData.filter((obj) => obj.id === parseInt(idToGet.id));
+    return target;
+  });
+
   createWindow();
 
   app.on("activate", () => {
