@@ -1,6 +1,16 @@
 const { app, BrowserWindow, ipcMain } = require("electron/main");
 const path = require("node:path");
 const testData = require("./data");
+const { Pool } = require("pg");
+require("dotenv").config();
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+});
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -22,8 +32,12 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("getData", async (e, idToGet) => {
-    const target = testData.filter((obj) => obj.id === parseInt(idToGet.id));
-    return target;
+    const result = await pool.query(
+      "select * from records order by id desc limit 5",
+    );
+    return result.rows;
+    // const target = testData.filter((obj) => obj.id === parseInt(idToGet.id));
+    // return target;
   });
 
   createWindow();
