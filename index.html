@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>Test Electron App</title>
+    <link
+      rel="stylesheet"
+      href="style.css"
+    />
+    <!-- <script
+      src="script.js"
+      defer
+      ></script> -->
+  </head>
+  <body>
+    <h1>Test Electron App</h1>
+    <div id="info"></div>
+    <!-- <div class="input-group">
+      <label for="test-input">test label</label>
+      <input
+        type="text"
+        name="name"
+        id="test-input"
+      />
+    </div>
+    <button
+      command="show-modal"
+      commandfor="test-dialog"
+      id="test-btn"
+    >
+      submit
+    </button>
+    <dialog id="test-dialog">
+      <div>Im a dialog element</div>
+      <button
+        command="close"
+        commandfor="test-dialog"
+      >
+        close
+      </button>
+    </dialog> -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>
