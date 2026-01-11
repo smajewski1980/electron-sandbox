@@ -1,4 +1,4 @@
-// const information = document.getElementById("info");
+const information = document.getElementById("info");
 // information.innerText = `This app is using Chrome (v${window.versions.chrome()}), Node.js (v${window.versions.node()}), and Electron (v${window.versions.electron()})`;
 
 // const func = async () => {
@@ -15,5 +15,10 @@ testBtn.addEventListener("click", async () => {
   const response = await window.testFuncs.getData("getData", {
     id: testInput.value,
   });
-  console.log(response);
+  response.forEach((obj) => {
+    const p = document.createElement("p");
+    p.innerText = `${obj.id} - ${obj.artist} - ${obj.title}`;
+    information.appendChild(p);
+  });
+  document.body.style.backgroundColor = "#202020";
 });
