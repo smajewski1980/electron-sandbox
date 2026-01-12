@@ -1,13 +1,4 @@
 const information = document.getElementById("info");
-// information.innerText = `This app is using Chrome (v${window.versions.chrome()}), Node.js (v${window.versions.node()}), and Electron (v${window.versions.electron()})`;
-
-// const func = async () => {
-//   const response = await window.versions.ping();
-//   console.log(response); // prints out 'pong'
-// };
-
-// func();
-
 const testInput = document.getElementById("test-input");
 const testBtn = document.getElementById("test-btn");
 
@@ -22,3 +13,31 @@ testBtn.addEventListener("click", async () => {
   });
   document.body.style.backgroundColor = "#202020";
 });
+
+// can access data stored in preload.js
+// console.log(window.sillyness.silly1());
+// console.log(window.sillyness.silly2());
+// console.log(window.sillyness.silly3());
+// console.log(window.sillyness.silly4());
+
+// generate a random "error" which gets its msg from our custom errors message obj
+const rndNum = Math.ceil(Math.random() * 5);
+switch (rndNum) {
+  case 1:
+    console.log(window.errors.errorType1);
+    break;
+  case 2:
+    console.log(window.errors.errorType2);
+    break;
+  case 3:
+    console.log(window.errors.errorType3);
+    break;
+  case 4:
+    console.log(window.errors.errorType4);
+    break;
+  case 5:
+    console.log(window.errors.errorType5);
+    break;
+  default:
+    break;
+}

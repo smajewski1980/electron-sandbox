@@ -1,60 +1,41 @@
 const { app, BrowserWindow, ipcMain, Tray } = require("electron/main");
 const path = require("node:path");
-const testData = require("./data");
-const { Pool } = require("pg");
-const dotenv = require("dotenv");
-dotenv.config();
-const dotenvExpand = require("dotenv-expand");
+const { getDataHandler } = require("./ipc-handlers/getDataHandler");
 
-// Determine the correct path for the .env file
-const envPath = app.isPackaged
-  ? path.join(process.resourcesPath, ".env")
-  : path.join(__dirname, ".env");
-
-// Load environment variables
-const myEnv = dotenv.config({ path: envPath });
-dotenvExpand.expand(myEnv);
-
+// for the tray icon which gets set below
 let tray = null;
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-});
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    // width: 800,
+    // height: 600,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
     icon: `${path.join(__dirname, "/assets/test_icon.png")}`,
+    // using the below line loses the os controls
+    // fullscreen: true,
   });
-
   win.loadFile("index.html");
+  // the below line preserves the os controls
+  win.maximize();
+
+  // open the dev tools in development
+  if (!app.isPackaged) {
+    win.webContents.openDevTools();
+  }
 };
 
 app.whenReady().then(() => {
   const tray = new Tray(path.join(__dirname, "/assets/test_icon.png"));
 
+  // "testEvent" is the "channel name"(custom event) that is called from renderer through the preload script
   ipcMain.handle("testEvent", async (e, message) => {
-    console.log(message);
     console.log(`heres a message from the "frontend": ${message.message}`);
     return "thanks for the message!";
   });
 
-  ipcMain.handle("getData", async (e, idToGet) => {
-    const result = await pool.query(
-      "select * from records order by id desc limit 5",
-    );
-    return result.rows;
-    // const target = testData.filter((obj) => obj.id === parseInt(idToGet.id));
-    // return target;
-  });
+  ipcMain.handle("getData", getDataHandler);
 
   createWindow();
 
