@@ -16,10 +16,6 @@
       rel="stylesheet"
       href="style.css"
     />
-    <!-- <script
-      src="script.js"
-      defer
-      ></script> -->
   </head>
   <body>
     <h1>Test Electron App</h1>
@@ -33,30 +29,17 @@
     />
     <button id="test-btn">push me</button>
 
-    <!-- <div class="input-group">
-      <label for="test-input">test label</label>
-      <input
-        type="text"
-        name="name"
-        id="test-input"
-      />
-    </div>
-    <button
-      command="show-modal"
-      commandfor="test-dialog"
-      id="test-btn"
-    >
-      submit
-    </button>
-    <dialog id="test-dialog">
-      <div>Im a dialog element</div>
-      <button
-        command="close"
-        commandfor="test-dialog"
-      >
-        close
-      </button>
-    </dialog> -->
+    <dialog id="pw-dialog">
+      <form>
+        <label for="postgresPw">Postgres password:</label>
+        <input
+          type="password"
+          name="pw"
+          id="postgresPw"
+        />
+        <button type="submit">submit</button>
+      </form>
+    </dialog>
     <script src="./renderer.js"></script>
   </body>
 </html>

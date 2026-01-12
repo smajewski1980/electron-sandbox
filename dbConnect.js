@@ -2,8 +2,7 @@ const { Pool } = require("pg");
 const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
 const path = require("node:path");
-const { app } = require("electron/main");
-
+const { app, ipcMain } = require("electron/main");
 // Determine the correct path for the .env file
 const envPath = app.isPackaged
   ? path.join(process.resourcesPath, ".env")
@@ -12,13 +11,18 @@ const envPath = app.isPackaged
 // Load environment variables
 const myEnv = dotenv.config({ path: envPath });
 dotenvExpand.expand(myEnv);
+let dbPw = "";
+ipcMain.handle("password", (e, pw) => {
+  dbPw = pw;
+});
 
 // postgres credentials
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
+  // password: process.env.DB_PASSWORD,
+  password: () => dbPw,
   port: process.env.DB_PORT,
 });
 

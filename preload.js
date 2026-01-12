@@ -24,3 +24,7 @@ contextBridge.exposeInMainWorld("errors", {
   errorType4: "error type four, please try again",
   errorType5: "error type five, please try again",
 });
+
+contextBridge.exposeInMainWorld("password", {
+  password: (pw) => ipcRenderer.invoke("password", pw),
+});

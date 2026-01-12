@@ -14,6 +14,16 @@ testBtn.addEventListener("click", async () => {
   document.body.style.backgroundColor = "#202020";
 });
 
+const dialogEl = document.getElementById("pw-dialog");
+dialogEl.showModal();
+const pwForm = document.querySelector("#pw-dialog form");
+const pwInput = document.getElementById("postgresPw");
+pwForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  window.password.password(pwInput.value);
+  dialogEl.close();
+});
+
 // can access data stored in preload.js
 // console.log(window.sillyness.silly1());
 // console.log(window.sillyness.silly2());
