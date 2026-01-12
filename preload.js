@@ -7,6 +7,10 @@ contextBridge.exposeInMainWorld("testFuncs", {
   getData: (channel, data) => ipcRenderer.invoke(channel, data),
 });
 
+contextBridge.exposeInMainWorld("sendQueryData", {
+  sendQueryData: (channel, data) => ipcRenderer.invoke(channel, data),
+});
+
 // if we have a bunch of static data to use this would be the place to store it
 contextBridge.exposeInMainWorld("sillyness", {
   silly1: () => "Silly message one.",

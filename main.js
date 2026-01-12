@@ -1,6 +1,7 @@
-const { app, BrowserWindow, ipcMain, Tray } = require("electron/main");
+const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron/main");
 const path = require("node:path");
 const { getDataHandler } = require("./ipc-handlers/getDataHandler");
+const { sendQueryDataHandler } = require("./ipc-handlers/sendQueryDataHandler");
 
 // for the tray icon which gets set below
 let tray = null;
@@ -12,10 +13,20 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
+    accentColor: "darkorchid",
     icon: `${path.join(__dirname, "/assets/test_icon.png")}`,
     // using the below line loses the os controls
     // fullscreen: true,
   });
+
+  Menu.setApplicationMenu(null);
+  // i like it to open on top of everything
+  win.setAlwaysOnTop(true);
+  // this releases it so other windows can be on top again, the time is a magic number
+  setTimeout(() => {
+    win.setAlwaysOnTop(false);
+  }, 500);
+  // win.setAccentColor("firebrick"); <--this is just the part above the menu bar
   win.loadFile("index.html");
   // the below line preserves the os controls
   win.maximize();
@@ -36,6 +47,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("getData", getDataHandler);
+  ipcMain.handle("sendQueryData", sendQueryDataHandler);
 
   createWindow();
 

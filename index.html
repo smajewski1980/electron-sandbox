@@ -11,7 +11,7 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
-    <title>Test Electron App</title>
+    <title>Learning Electron</title>
     <link
       rel="stylesheet"
       href="style.css"
@@ -20,15 +20,56 @@
   <body>
     <h1>Test Electron App</h1>
     <div id="info"></div>
-    <label for="test-input">nevermind the input, just push the button</label
-    ><br />
-    <input
-      type="text"
-      name="message"
-      id="test-input"
-    />
-    <button id="test-btn">push me</button>
-
+    <form id="search-form">
+      <label for="search-term">Enter search term:</label><br />
+      <input
+        type="text"
+        name="searchTerm"
+        id="search-term"
+      />
+      <fieldset>
+        <legend>search format</legend>
+        <label for="search-format-records">records</label>
+        <input
+          type="radio"
+          name="searchFormat"
+          id="search-format-records"
+          value="records"
+        />
+        <label for="search-format-tapes">tapes</label>
+        <input
+          type="radio"
+          name="searchFormat"
+          id="search-format-tapes"
+          value="tapes"
+        />
+        <label for="search-format-cds">cds</label>
+        <input
+          type="radio"
+          name="searchFormat"
+          id="search-format-cds"
+          value="cds"
+        />
+      </fieldset>
+      <fieldset>
+        <legend>search field</legend>
+        <label for="search-field-artist">artist</label>
+        <input
+          type="radio"
+          name="searchField"
+          id="search-field-artist"
+          value="artist"
+        />
+        <label for="search-field-title">title</label>
+        <input
+          type="radio"
+          name="searchField"
+          id="search-field-title"
+          value="title"
+        />
+      </fieldset>
+      <button id="search-btn">search</button>
+    </form>
     <dialog id="pw-dialog">
       <form>
         <label for="postgresPw">Postgres password:</label>
